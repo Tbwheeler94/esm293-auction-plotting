@@ -1,0 +1,27 @@
+---
+title: "graph_auction"
+author: "Tom Wheeler"
+date: "5/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(plotly)
+
+data <- read_csv('auctiondata.csv')
+
+data$right <- cumsum(data$mw)
+data$left <- data$right - data$mw 
+
+p <- ggplot(data) + 
+    geom_rect(aes(xmin = left, xmax = right, ymax = atc, fill = plant, ymin =0)) +
+    xlab("generation") + 
+    ylab("value") +
+    geom_abline(aes(intercept=22110,slope=-2)) 
+
+ggplotly(p)
+
+```
