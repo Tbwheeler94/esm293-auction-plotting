@@ -20,7 +20,7 @@ p <- ggplot(data) +
     geom_rect(aes(xmin = left, xmax = right, ymax = atc, fill = plant, ymin =0)) +
     xlab("generation") + 
     ylab("value") +
-    geom_abline(aes(intercept=22110,slope=-2)) 
+    geom_abline(aes(intercept=11055,slope=-1)) 
 
 ggplotly(p)
 
