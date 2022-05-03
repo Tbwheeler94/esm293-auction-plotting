@@ -16,12 +16,43 @@ data <- read_csv('auctiondata.csv')
 data$right <- cumsum(data$mw)
 data$left <- data$right - data$mw 
 
-p <- ggplot(data) + 
+p1 <- ggplot(data) + 
     geom_rect(aes(xmin = left, xmax = right, ymax = atc, fill = plant, ymin =0)) +
     xlab("generation") + 
     ylab("value") +
     geom_abline(aes(intercept=11055,slope=-1)) 
 
-ggplotly(p)
+ggplotly(p1)
 
 ```
+
+```{r}
+p2 <- ggplot(data) + 
+    geom_rect(aes(xmin = left, xmax = right, ymax = atc, fill = plant, ymin =0)) +
+    xlab("generation") + 
+    ylab("value") +
+    geom_abline(aes(intercept=19145,slope=-1.27)) 
+
+ggplotly(p2)
+```
+
+```{r}
+p3 <- ggplot(data) + 
+    geom_rect(aes(xmin = left, xmax = right, ymax = atc, fill = plant, ymin =0)) +
+    xlab("generation") + 
+    ylab("value") +
+    geom_abline(aes(intercept=25807,slope=-1.2)) 
+
+ggplotly(p3)
+```
+
+```{r}
+p4 <- ggplot(data) + 
+    geom_rect(aes(xmin = left, xmax = right, ymax = atc, fill = plant, ymin =0)) +
+    xlab("generation") + 
+    ylab("value") +
+    geom_abline(aes(intercept=23928,slope=-1.27)) 
+
+ggplotly(p4)
+```
+
