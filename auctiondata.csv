@@ -1,43 +1,43 @@
-﻿portfolio,plant,location,mw,fuelcost,varom,fixom,carbon,fuel_type,total generation cost ($/plant/hour),atc
-Old_Timers,BIG_CREEK,South,1000,0,0,3750,0,hydro,3750.00,3.75
-Fossil_Light,HELMS,North,800,0,0.5,3750,0,hydro,4150.00,5.19
-Fossil_Light,DIABLO_CANYON_1,North,1000,7.5,4,5000,0,nuclear,16500.00,16.50
-Big_Coal,FOUR_CORNERS,South,1900,17.5,1.5,2000,0.55,coal,38100.00,20.05
-Old_Timers,MOHAVE_1,South,750,15,4.5,3750,0.47,gas,18375.00,24.50
-Old_Timers,MOHAVE_2,South,750,15,4.5,3750,0.47,gas,18375.00,24.50
-Bay_Views,MOSS_LANDING_6,North,750,21.5,1.5,2000,0.25,gas,19250.00,25.67
-Bay_Views,MOSS_LANDING_7,North,750,21.5,1.5,2000,0.25,gas,19250.00,25.67
-East_Bay,PITTSBURGH_5-6,North,650,25,0.5,625,0.29,gas,17200.00,26.46
-Bay_Views,MORRO_BAY_3-4,North,665,25,0.5,1000,0.29,gas,17958.00,27.00
-Beachfront,MANDALAY_1-2,South,300,26,1.5,250,0.31,gas,8500.00,28.33
-Bay_Views,MORRO_BAY_1-2,North,335,26.5,0.5,500,0.31,gas,9545.00,28.49
-Beachfront,ORMOND_BEACH_1,South,700,26,0.5,1750,0.31,gas,20300.00,29.00
-Beachfront,ORMOND_BEACH_2,South,700,26,0.5,1750,0.31,gas,20300.00,29.00
-Big_Gas,EL_SEGUNDO_3-4,South,650,27.5,1.5,250,0.32,gas,19100.00,29.38
-East_Bay,PITTSBURGH_1-4,North,650,28,0.5,625,0.33,gas,19150.00,29.46
-Big_Gas,ENCINA,South,950,28.5,0.5,500,0.34,gas,28050.00,29.53
-East_Bay,CONTRA_COSTA_6-7,North,700,27,0.5,1500,0.32,gas,20750.00,29.64
-Big_Coal,HUNTINGTON_BEACH_1-2,South,300,27,1.5,500,0.32,gas,9050.00,30.17
-Beachfront,COOLWATER,South,650,29,0.5,500,0.34,gas,19675.00,30.27
-Big_Coal,REDONDO_7-8,South,950,28,1.5,1250,0.33,gas,29275.00,30.82
-Big_Gas,SOUTH_BAY,South,700,30,0.5,500,0.35,gas,21850.00,31.21
-Big_Coal,REDONDO_5-6,South,350,28,1.5,750,0.33,gas,11075.00,31.64
-Big_Gas,EL_SEGUNDO_1-2,South,400,30,1.5,250,0.35,gas,12850.00,32.13
-Beachfront,ETIWANDA_1-4,South,850,28.5,1.5,2000,0.34,gas,27500.00,32.35
-Fossil_Light,HUMBOLDT,North,150,32.5,0.5,0,0.38,gas,4950.00,33.00
-Old_Timers,HIGHGROVE,South,150,34,0.5,0,0.4,gas,5175.00,34.50
-Fossil_Light,HUNTERS_POINT_1-2,North,150,33,1.5,250,0.39,gas,5425.00,36.17
-Big_Gas,LONG_BEACH,South,550,36,0.5,500,0.42,gas,20575.00,37.41
-Old_Timers,SAN_BERNADINO,South,100,37,0.5,0,0.44,gas,3750.00,37.50
-Beachfront,MANDALAY_3,South,150,35,1.5,250,0.41,gas,5725.00,38.17
-East_Bay,CONTRA_COSTA_4-5,North,150,40,0.5,250,0.47,gas,6325.00,42.17
-Bay_Views,OAKLAND,North,150,42,0.5,0,0.5,gas,6375.00,42.50
-East_Bay,PITTSBURGH_7,North,700,41,0.5,1000,0.48,gas,30050.00,42.93
-Big_Gas,NORTH_ISLAND,South,150,45,0.5,0,0.53,gas,6825.00,45.50
-Beachfront,ETIWANDA_5,South,150,42.5,1.5,250,0.5,gas,6850.00,45.67
-East_Bay,POTRERO_HILL,North,150,48,0.5,0,0.57,gas,7275.00,48.50
-Big_Coal,HUNTINGTON_BEACH_5,South,150,45,1.5,500,0.53,gas,7475.00,49.83
-Big_Coal,ALAMITOS_7,South,250,50,1.5,0,0.59,gas,12875.00,51.50
-Beachfront,ELLWOOD,South,300,52,0.5,0,0.61,gas,15750.00,52.50
-Fossil_Light,HUNTERS_POINT_4,North,250,51.5,1.5,250,0.61,gas,13500.00,54.00
-Big_Gas,KEARNY,South,200,62,0.5,0,0.73,gas,12500.00,62.50
+﻿portfolio,plant,location,mw,fuelcost,varom,fixom,carbon,fuel_type,total generation cost ($/plant/hour),average total cost ($/MWh),mc
+Old_Timers,BIG_CREEK,South,1000,0,0,3750,0,hydro,"$3,750 ",$3.75 ,0.00
+Fossil_Light,HELMS,North,800,0,0.5,3750,0,hydro,"$4,150 ",$5.19 ,0.50
+Fossil_Light,DIABLO_CANYON_1,North,1000,7.5,4,5000,0,nuclear,"$16,500 ",$16.50 ,11.50
+Big_Coal,FOUR_CORNERS,South,1900,17.5,1.5,2000,0.55,coal,"$38,100 ",$20.05 ,19.00
+Old_Timers,MOHAVE_1,South,750,15,4.5,3750,0.47,gas,"$18,375 ",$24.50 ,19.50
+Old_Timers,MOHAVE_2,South,750,15,4.5,3750,0.47,gas,"$18,375 ",$24.50 ,19.50
+Bay_Views,MOSS_LANDING_6,North,750,21.5,1.5,2000,0.25,gas,"$19,250 ",$25.67 ,23.00
+Bay_Views,MOSS_LANDING_7,North,750,21.5,1.5,2000,0.25,gas,"$19,250 ",$25.67 ,23.00
+East_Bay,PITTSBURGH_5-6,North,650,25,0.5,625,0.29,gas,"$17,200 ",$26.46 ,25.50
+Bay_Views,MORRO_BAY_3-4,North,665,25,0.5,1000,0.29,gas,"$17,958 ",$27.00 ,25.50
+Beachfront,ORMOND_BEACH_1,South,700,26,0.5,1750,0.31,gas,"$20,300 ",$29.00 ,26.50
+Beachfront,ORMOND_BEACH_2,South,700,26,0.5,1750,0.31,gas,"$20,300 ",$29.00 ,26.50
+Bay_Views,MORRO_BAY_1-2,North,335,26.5,0.5,500,0.31,gas,"$9,545 ",$28.49 ,27.00
+Beachfront,MANDALAY_1-2,South,300,26,1.5,250,0.31,gas,"$8,500 ",$28.33 ,27.50
+East_Bay,CONTRA_COSTA_6-7,North,700,27,0.5,1500,0.32,gas,"$20,750 ",$29.64 ,27.50
+East_Bay,PITTSBURGH_1-4,North,650,28,0.5,625,0.33,gas,"$19,150 ",$29.46 ,28.50
+Big_Coal,HUNTINGTON_BEACH_1-2,South,300,27,1.5,500,0.32,gas,"$9,050 ",$30.17 ,28.50
+Big_Gas,EL_SEGUNDO_3-4,South,650,27.5,1.5,250,0.32,gas,"$19,100 ",$29.38 ,29.00
+Big_Gas,ENCINA,South,950,28.5,0.5,500,0.34,gas,"$28,050 ",$29.53 ,29.00
+Beachfront,COOLWATER,South,650,29,0.5,500,0.34,gas,"$19,675 ",$30.27 ,29.50
+Big_Coal,REDONDO_7-8,South,950,28,1.5,1250,0.33,gas,"$29,275 ",$30.82 ,29.50
+Big_Coal,REDONDO_5-6,South,350,28,1.5,750,0.33,gas,"$11,075 ",$31.64 ,29.50
+Beachfront,ETIWANDA_1-4,South,850,28.5,1.5,2000,0.34,gas,"$27,500 ",$32.35 ,30.00
+Big_Gas,SOUTH_BAY,South,700,30,0.5,500,0.35,gas,"$21,850 ",$31.21 ,30.50
+Big_Gas,EL_SEGUNDO_1-2,South,400,30,1.5,250,0.35,gas,"$12,850 ",$32.13 ,31.50
+Fossil_Light,HUMBOLDT,North,150,32.5,0.5,0,0.38,gas,"$4,950 ",$33.00 ,33.00
+Old_Timers,HIGHGROVE,South,150,34,0.5,0,0.4,gas,"$5,175 ",$34.50 ,34.50
+Fossil_Light,HUNTERS_POINT_1-2,North,150,33,1.5,250,0.39,gas,"$5,425 ",$36.17 ,34.50
+Big_Gas,LONG_BEACH,South,550,36,0.5,500,0.42,gas,"$20,575 ",$37.41 ,36.50
+Beachfront,MANDALAY_3,South,150,35,1.5,250,0.41,gas,"$5,725 ",$38.17 ,36.50
+Old_Timers,SAN_BERNADINO,South,100,37,0.5,0,0.44,gas,"$3,750 ",$37.50 ,37.50
+East_Bay,CONTRA_COSTA_4-5,North,150,40,0.5,250,0.47,gas,"$6,325 ",$42.17 ,40.50
+East_Bay,PITTSBURGH_7,North,700,41,0.5,1000,0.48,gas,"$30,050 ",$42.93 ,41.50
+Bay_Views,OAKLAND,North,150,42,0.5,0,0.5,gas,"$6,375 ",$42.50 ,42.50
+Beachfront,ETIWANDA_5,South,150,42.5,1.5,250,0.5,gas,"$6,850 ",$45.67 ,44.00
+Big_Gas,NORTH_ISLAND,South,150,45,0.5,0,0.53,gas,"$6,825 ",$45.50 ,45.50
+Big_Coal,HUNTINGTON_BEACH_5,South,150,45,1.5,500,0.53,gas,"$7,475 ",$49.83 ,46.50
+East_Bay,POTRERO_HILL,North,150,48,0.5,0,0.57,gas,"$7,275 ",$48.50 ,48.50
+Big_Coal,ALAMITOS_7,South,250,50,1.5,0,0.59,gas,"$12,875 ",$51.50 ,51.50
+Beachfront,ELLWOOD,South,300,52,0.5,0,0.61,gas,"$15,750 ",$52.50 ,52.50
+Fossil_Light,HUNTERS_POINT_4,North,250,51.5,1.5,250,0.61,gas,"$13,500 ",$54.00 ,53.00
+Big_Gas,KEARNY,South,200,62,0.5,0,0.73,gas,"$12,500 ",$62.50 ,62.50
