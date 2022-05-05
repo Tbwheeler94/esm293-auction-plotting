@@ -56,3 +56,191 @@ p4 <- ggplot(data) +
 ggplotly(p4)
 ```
 
+```{r}
+
+data <- read_csv('auctiondata.csv')
+
+#intersection of north's demand with q axis
+north_demand <- 4020
+#intersection of south's demand with q axis
+south_demand <- 7035
+#cumulative amount of mwh's sent north
+north_sent <- 0
+#cumulative amount of mwh's sent south
+south_sent <- 0
+#cumulative amount of mwh's sent via transmission
+transmission_sent <- 0
+#maximum amount of transmission
+transmission_limit <- 750
+
+data <- data %>% 
+    select(portfolio, plant, location, mw, mc, fixom) %>% 
+    mutate(location_added = "") %>% 
+    mutate(mw_added_in_same_zone = 0) %>% 
+    mutate(transmit_location = "") %>% 
+    mutate(transmit_added = 0) %>% 
+    mutate(cumulative_mwh_north = 0) %>% 
+    mutate(cumulative_mwh_south = 0) %>% 
+    mutate(generator = "")
+                
+
+for (i in 1:nrow(data)) {
+    
+    #begin by sending electricity produced in north to north demand before transmission limit is hit
+    if (north_demand > north_sent & data$location[i] == "North" & transmission_sent < transmission_limit) {
+        
+        #update amount sent north
+        north_sent <- north_sent + data$mw[i]
+        
+        #update amount added column
+        data$mw_added_in_same_zone[i] <- data$mw[i]
+        
+        #location added
+        data$location_added[i] <- data$location[i]
+        
+        #sent extra power south if generation from north exceeds north demand
+        if (north_demand < north_sent) {
+            #calculate how much north demand was overshot
+            excess_north <- north_sent - north_demand
+            #subtract that excess value from north sent to make north sent = north demand
+            north_sent <- north_sent - excess_north
+            #add excess amount sent beyond north's demand to existing transmission sent value
+            transmission_sent <- excess_north + transmission_sent
+            #put how much transmission was sent in transmit added column
+            data$transmit_added[i] <- excess_north 
+            #put location of where it was sent in transmit location
+            data$transmit_location[i] <- 'South'
+            #subtract the amount demand was over shot by the total generating capacity of the plant to assess how much was sent to same zone
+            data$mw_added_in_same_zone[i] <- data$mw[i] - excess_north
+            #update total south sent value with the excess value
+            south_sent <- south_sent + excess_north
+        }
+        
+    } else if (south_demand > south_sent & data$location[i] == "South" & transmission_sent < transmission_limit) {
+        
+        #update amount sent north
+        south_sent <- south_sent + data$mw[i]
+        
+        #update amount added column
+        data$mw_added_in_same_zone[i] <- data$mw[i]
+        
+        #location added
+        data$location_added[i] <- data$location[i]
+        
+        #sent extra power north if generation from south exceeds south demand
+        if (south_demand < south_sent) {
+            excess_south <- south_sent - south_demand
+            south_sent <- south_sent - excess_south
+            transmission_sent <- excess_south + transmission_sent
+            data$transmit_added[i] <- excess_south
+            data$transmit_location[i] <- 'North'
+            data$mw_added_in_same_zone[i] <- data$mw[i] - excess_south
+            north_sent <- north_sent + excess_south
+        }
+        
+    } else if (north_demand == north_sent & data$location[i] == "North" & transmission_sent < transmission_limit) {
+        
+        data$location_added[i] <- 'North Demand Maxed, None Sent North'
+        data$transmit_location[i] <- 'South'
+        
+        if (transmission_sent + data$mw[i] > transmission_limit) {
+            transmission_remaining <- transmission_limit - transmission_sent
+            data$transmit_added[i] <- transmission_remaining
+            data$mw_added_in_same_zone[i] <- 0
+            transmission_sent <- transmission_sent + transmission_remaining
+            south_sent <- south_sent + transmission_remaining
+        } else {
+            data$transmit_added[i] <- data$mw[i]
+            transmission_sent <- transmission_sent + data$mw[i]
+            south_sent <- south_sent + data$mw[i]
+        }
+        
+    } else if (south_demand == south_sent & data$location[i] == "South" & transmission_sent < transmission_limit) {
+        
+        data$location_added[i] <- 'South Demand Maxed, None Sent South'
+        data$transmit_location[i] <- 'North'
+        
+        if (transmission_sent + data$mw[i] > transmission_limit) {
+            transmission_remaining <- transmission_limit - transmission_sent
+            data$transmit_added[i] <- transmission_remaining
+            data$mw_added_in_same_zone[i] <- 0
+            transmission_sent <- transmission_sent + transmission_remaining
+            north_sent <- north_sent + transmission_remaining
+        } else {
+            data$transmit_added[i] <- data$mw[i]
+            transmission_sent <- transmission_sent + data$mw[i]
+            north_sent <- north_sent + data$mw[i]
+        }
+        
+    } else if (north_demand > north_sent & data$location[i] == "North" & transmission_sent == transmission_limit) {
+        
+        #update amount sent north
+        north_sent <- north_sent + data$mw[i]
+        
+        #update amount added column
+        data$mw_added_in_same_zone[i] <- data$mw[i]
+        
+        #location added
+        data$location_added[i] <- data$location[i]
+        
+        #curtail excess generation
+        if (north_demand < north_sent) {
+            #calculate how much north demand was overshot
+            excess_north <- north_sent - north_demand
+            #subtract that excess value from north sent to make north sent = north demand
+            north_sent <- north_sent - excess_north
+            #subtract the amount demand was over shot by the total generating capacity of the plant to assess how much was sent to same zone
+            data$mw_added_in_same_zone[i] <- data$mw[i] - excess_north
+        }
+        
+    } else if (south_demand > south_sent & data$location[i] == "South" & transmission_sent == transmission_limit) {
+        
+        #update amount sent north
+        south_sent <- south_sent + data$mw[i]
+        
+        #update amount added column
+        data$mw_added_in_same_zone[i] <- data$mw[i]
+        
+        #location added
+        data$location_added[i] <- data$location[i]
+        
+        #curtail excess generation
+        if (south_demand < south_sent) {
+            #calculate how much north demand was overshot
+            excess_south <- south_sent - south_demand
+            #subtract that excess value from north sent to make north sent = north demand
+            south_sent <- south_sent - excess_south
+            #subtract the amount demand was over shot by the total generating capacity of the plant to assess how much was sent to same zone
+            data$mw_added_in_same_zone[i] <- data$mw[i] - excess_south
+        }
+        
+    } else if (south_demand == south_sent & north_demand == north_sent & transmission_sent == transmission_limit) {
+        data$generator[i-1] = "Last Generator"
+        break
+    }
+    
+    data$cumulative_mwh_north[i] <- north_sent
+    data$cumulative_mwh_south[i] <- south_sent
+    
+}
+```
+
+## Calculate portfolio values
+
+```{r}
+list_of_unique_portfolios <- unique(data$portfolio)
+portfolio_values <- tibble(portfolio_name = character(0L), portfolio_value = numeric(0))
+
+last_generator_only <- data %>% filter(generator == "Last Generator")
+market_price <- last_generator_only$mc[1]
+
+for (i in 1:length(unique(data$portfolio))) {
+    
+    filtered_data <- data %>% filter(portfolio == list_of_unique_portfolios[i]) %>% mutate(total_mw_produced = mw_added_in_same_zone + transmit_added) %>% mutate(total_profit = (total_mw_produced*market_price) - (total_mw_produced*mc) - fixom)
+    
+    portfolio_value <- sum(filtered_data$total_profit)
+    
+    portfolio_values <- portfolio_values %>% add_row(portfolio_name = filtered_data$portfolio[i], portfolio_value = portfolio_value)
+}
+```
+
