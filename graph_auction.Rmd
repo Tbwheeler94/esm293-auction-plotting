@@ -63,7 +63,7 @@ data <- read_csv('auctiondata.csv')
 #intersection of north's demand with q axis
 north_demand <- 4020
 #intersection of south's demand with q axis
-south_demand <- 7035
+south_demand <- 11055
 #cumulative amount of mwh's sent north
 north_sent <- 0
 #cumulative amount of mwh's sent south
