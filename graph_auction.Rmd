@@ -249,3 +249,55 @@ for (i in 1:length(unique(data$portfolio))) {
 }
 ```
 
+```{r}
+
+aggregate_demand <- 11055
+total_generated <- 0
+
+new_data <- data %>% add_column(generator = "")
+
+for (i in 1:nrow(new_data)) {
+    
+    if (total_generated < aggregate_demand){
+    total_generated <- total_generated + new_data$mw[i]
+    }
+    
+    if (total_generated > aggregate_demand){
+    new_data$generator[i] <- "Last Generator"
+    new_data <- new_data %>% slice(1:i)
+    break
+    }
+}
+
+list_of_unique_portfolios <- unique(new_data$portfolio)
+portfolio_values <- tibble(portfolio_name = character(0L), portfolio_value = numeric(0), carbon_credits_needed = numeric(0))
+
+last_generator_only <- new_data %>% filter(generator == "Last Generator")
+market_price <- last_generator_only$mc[1]
+
+for (i in 1:length(unique(new_data$portfolio))) {
+    
+    #pull original data spreadsheet, use later to determine total fixed cost for each portfolio
+    full_portfolio <- data %>% filter(portfolio == list_of_unique_portfolios[i])
+    
+    #calculate total profit for each generator
+    filtered_data <- new_data %>% filter(portfolio == list_of_unique_portfolios[i]) %>% mutate(total_profit = (mw*market_price) - (mw*mc))
+    
+    #sum total profit for portfolio, subtract by total fixed om
+    portfolio_value <- sum(filtered_data$total_profit) - sum(full_portfolio$fixom)
+    
+    #calculate the number of carbon credits needed
+    #new_data <- 
+    
+    #add to portfolio values df
+    portfolio_values <- portfolio_values %>% add_row(portfolio_name = list_of_unique_portfolios[i], portfolio_value = portfolio_value)
+    
+}
+```
+
+## Calculate the total number of carbon credits needed for each portfolio
+
+```{r}
+
+```
+
