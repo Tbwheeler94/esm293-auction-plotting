@@ -13,6 +13,9 @@ library(plotly)
 
 data <- read_csv('auctiondata.csv')
 
+#add carbon price and order by new marginal cost rearrange
+data <- data %>% mutate(carbon_price = 163) %>% mutate(carbon_cost_per_mwh = carbon_price*carbon) %>% mutate(mc = mc + carbon_cost_per_mwh) %>% dplyr::arrange(mc)
+
 data$right <- cumsum(data$mw)
 data$left <- data$right - data$mw 
 
@@ -56,9 +59,11 @@ p4 <- ggplot(data) +
 ggplotly(p4)
 ```
 
+## Allocate generation to different zones
+
 ```{r}
 
-data <- read_csv('auctiondata.csv')
+#data <- read_csv('auctiondata.csv')
 
 #intersection of north's demand with q axis
 north_demand <- 4020
