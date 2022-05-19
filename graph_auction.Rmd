@@ -5,6 +5,8 @@ date: "5/2/2022"
 output: html_document
 ---
 
+## Import dependencies and data, prep data for graphing
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -19,6 +21,12 @@ data <- data %>% mutate(carbon_price = 163) %>% mutate(carbon_cost_per_mwh = car
 data$right <- cumsum(data$mw)
 data$left <- data$right - data$mw 
 
+```
+
+## Plot period 1 (no transmission limits)
+
+```{r}
+
 p1 <- ggplot(data) + 
     geom_rect(aes(xmin = left, xmax = right, ymax = mc, fill = plant, ymin =0)) +
     xlab("generation") + 
@@ -28,6 +36,8 @@ p1 <- ggplot(data) +
 ggplotly(p1)
 
 ```
+
+## Plot period 2 (no transmission limits)
 
 ```{r}
 p2 <- ggplot(data) + 
@@ -39,6 +49,8 @@ p2 <- ggplot(data) +
 ggplotly(p2)
 ```
 
+## Plot period 3 (no transmission limits)
+
 ```{r}
 p3 <- ggplot(data) + 
     geom_rect(aes(xmin = left, xmax = right, ymax = mc, fill = plant, ymin =0)) +
@@ -48,6 +60,8 @@ p3 <- ggplot(data) +
 
 ggplotly(p3)
 ```
+
+## Plot period 4 (no transmission limits)
 
 ```{r}
 p4 <- ggplot(data) + 
@@ -59,11 +73,11 @@ p4 <- ggplot(data) +
 ggplotly(p4)
 ```
 
-## Allocate generation to different zones
+## Calculate how generation will be allocated with transmission limits
 
 ```{r}
 
-#data <- read_csv('auctiondata.csv')
+data <- read_csv('auctiondata.csv')
 
 #intersection of north's demand with q axis
 north_demand <- 4020
@@ -230,7 +244,7 @@ for (i in 1:nrow(data)) {
 }
 ```
 
-## Class 1: Calculate portfolio values for production with transmission limits
+## Calculate portfolio values for production with transmission limits (see dataframe "portfolio_values" to see portfolio values)
 
 ```{r}
 list_of_unique_portfolios <- unique(data$portfolio)
@@ -249,7 +263,7 @@ for (i in 1:length(unique(data$portfolio))) {
 }
 ```
 
-## Class 2: Calculate portfolio value
+## Calculate portfolio values with carbon tax added as well as the number and total cost of carbon credits if paykng $163/credit (see dataframe "portfolio_carbon_bids')
 
 ```{r}
 
@@ -258,8 +272,8 @@ data <- read_csv('auctiondata.csv')
 #add carbon price and order by new marginal cost rearrange
 data <- data %>% mutate(carbon_price = 163) %>% mutate(carbon_cost_per_mwh = carbon_price*carbon) %>% mutate(mc = mc + carbon_cost_per_mwh) %>% dplyr::arrange(mc)
 
-aggregate_demand <- c(11055, 19145, 21000, 17000)
-list_of_unique_portfolios <- unique(new_data$portfolio)
+aggregate_demand <- c(11055, 15700, 21600, 19350)
+list_of_unique_portfolios <- unique(data$portfolio)
 portfolio_values <- tibble(portfolio_name = character(0L), portfolio_value = numeric(0), carbon_credits_needed = numeric(0), days_demand = numeric(0L))
 
 for (j in 1:length(aggregate_demand)){
@@ -277,17 +291,16 @@ total_generated <- 0
         }
         
         #if the total generated is larger than current demand value assign current generator as last generator and remove all remaining generators from df
-        if (total_generated > aggregate_demand[j]){
+        else if (total_generated >= aggregate_demand[j]){
         new_data$generator[i] <- "Last Generator"
-        new_data <- new_data %>% slice(1:i)
+        new_data <- new_data %>% slice(1:i-1)
         break
         }
+    
     }
     
-    #find current market price
-    last_generator_only <- new_data %>% filter(generator == "Last Generator")
-    market_price <- last_generator_only$mc[1]
-    
+    market_price <- new_data$mc[i-1]    
+
     #for each portfolio among the producers that will be dispatched
     for (x in 1:length(unique(new_data$portfolio))) {
         
@@ -308,11 +321,9 @@ total_generated <- 0
         
     }
 }
+
+#portfolio values with carbon prices
+portfolio_carbon_bids <- portfolio_values %>% group_by(portfolio_name) %>% summarize(total_carbon_credits_needed = sum(carbon_credits_needed), total_portfolio_value = sum(portfolio_value)) %>% mutate(carbon_credit_bid = total_carbon_credits_needed * 163) %>% mutate(highest_bid = as.integer(total_portfolio_value - 240221))
+
+#sum(portfolio_carbon_bids$total_carbon_credits_needed)
 ```
-
-## Calculate the total number of carbon credits needed for each portfolio
-
-```{r}
-
-```
-
